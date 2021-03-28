@@ -19,8 +19,9 @@ class Users extends Migration
             $table->string('nome');
             $table->string('email')->unique();
             $table->string('cpf')->unique();
-            $table->string('senha'); // aqui pode estar o erro
+            $table->string('password'); // aqui pode estar o erro
         });
+        
     }
 
     /**
@@ -31,6 +32,5 @@ class Users extends Migration
     public function down()
     {
         Schema::dropIfExists('users');
-        
     }
 }
