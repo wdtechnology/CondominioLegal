@@ -15,7 +15,7 @@ class AuthController extends Controller
     public function unauthorized(){
         return response()->json([
             'error' => 'Não Autorizado!'
-        ]);
+        ],401);
     }
 
     public function registrar(Request $request){
@@ -64,4 +64,56 @@ class AuthController extends Controller
         }
         return $array;
     }
+
+    public function login(Request $request){
+        $array = ['error' => ''];
+
+        $validator = Validator::make($request->all(), [
+            'cpf' => 'required|digits:11',
+            'password' => 'required'
+        ]);
+
+        if(!$validator->fails()){
+            $cpf = $request->input('cpf');
+            $password = $request->input('password');
+
+            $token = Auth::attempt(['cpf' => $cpf, 'password' => $password]);
+
+            if(!$token){
+                $array['error'] = 'CPF ou Senha estao errados.';
+                return $array;
+            }
+
+            $array['token'] = $token;
+            $usuario = Auth::user();
+            $array['usuario'] = $usuario;
+
+            $propriedades = Unidade::select(['id', 'nome'])->where('id_dono', $usuario['id'])->get();
+            $array['user']['propriedades'] = $propriedades;
+
+        }else{
+            $array['error'] = $validator->errors()->first();
+            return $array;
+        }
+        return $array;
+    }
+
+    public function validateToken(){
+        $array = ['error' => ''];
+
+        $usuario = Auth::user();
+        $array['usuario'] = $usuario;
+
+        $propriedades = Unidade::select(['id', 'nome'])->where('id_dono', $usuario['id'])->get();
+        $array['usuario']['propriedades'] = $propriedades;
+        return $array;
+    }
+
+    public function logout(){
+        $array = ['error' => ''];
+        Auth::logout();
+        return $array;
+    }
+
+
 }
