@@ -8,4 +8,6 @@ use Illuminate\Database\Eloquent\Model;
 class Mural extends Model
 {
     use HasFactory;
+    public $timestamps = false;
+    public $table = 'mural';
 }
