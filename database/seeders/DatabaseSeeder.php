@@ -26,15 +26,15 @@ class DatabaseSeeder extends Seeder
         ]);
         DB::table('unidades')->insert([
             'nome' => 'APT 102',
-            'id_dono' => '4',
+            'id_dono' => '3',
         ]);
         DB::table('unidades')->insert([
             'nome' => 'APT 103',
-            'id_dono' => '5',
+            'id_dono' => '4',
         ]);
         DB::table('unidades')->insert([
             'nome' => 'APT 104',
-            'id_dono' => '6',
+            'id_dono' => '5',
         ]);
 
         DB::table('areas')->insert([
