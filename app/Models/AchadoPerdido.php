@@ -8,4 +8,6 @@ use Illuminate\Database\Eloquent\Model;
 class AchadoPerdido extends Model
 {
     use HasFactory;
+    public $timestamps = false;
+    public $table = 'achadosperdidos';
 }
