@@ -8,4 +8,6 @@ use Illuminate\Database\Eloquent\Model;
 class Reserva extends Model
 {
     use HasFactory;
+    public $timestamps = false;
+    public $table = 'reservas';
 }

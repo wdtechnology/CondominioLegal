@@ -69,8 +69,8 @@ Route::middleware('auth:api')->group(function () {
     //Reservas
     Route::get('/reservas', [ReservaController::class, 'buscarReservas']);
     Route::post('/reserva/{id}', [ReservaController::class, 'fazerReserva']);
-    Route::get('/reserva/{id}/disableddates', [ReservaController::class, 'buscarDatasReservadas']);
-    Route::get('/reserva/{id}/times', [ReservaController::class, 'buscarHoraReservadas']);
+    Route::get('/reserva/{id}/diasfechado', [ReservaController::class, 'buscarDatasFechado']);
+    Route::get('/reserva/{id}/horas', [ReservaController::class, 'buscarHoraReservadas']);
     Route::get('/minhasreservas', [ReservaController::class, 'minhasReservas']);
     Route::delete('/minhasreservas/{id}', [ReservaController::class, 'deletarReserva']);
    
