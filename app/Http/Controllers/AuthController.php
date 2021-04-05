@@ -26,7 +26,8 @@ class AuthController extends Controller
             'email' => 'required|email|unique:users,email',
             'cpf' => 'required|digits:11|unique:users,cpf',
             'password' => 'required',
-            'confirma_password' => 'required|same:password'
+            'confirma_password' => 'required|same:password',
+            'propriedade' => 'required', 
         ]);
 
         if(!$validator->fails()){
@@ -35,6 +36,14 @@ class AuthController extends Controller
             $cpf = $request->input('cpf');
             $password = $request->input('password');
             $hash = password_hash($password, PASSWORD_DEFAULT);
+            $propriedade = $request->input('propriedade');
+
+            $unidade = Unidade::where('id', $propriedade)->where('id_dono', 0)->count();
+
+            if(!$unidade){
+                $array['error'] = 'Ocorreu um erro, verifique o numero da propriedade ou consulte o Administrador ou Sindico';
+                return $array;
+           }
 
             $newUser = new User();
             $newUser->nome = $nome;
@@ -53,6 +62,8 @@ class AuthController extends Controller
             $array['token'] = $token;
             $usuario = Auth::user();
             $array['usuario'] = $usuario;
+
+            Unidade::where('id', $propriedade)->update(['id_dono' => $usuario['id']]);
 
             $propriedades = Unidade::select(['id', 'nome'])->where('id_dono', $usuario['id'])->get();
             $array['usuario']['propriedades'] = $propriedades;
